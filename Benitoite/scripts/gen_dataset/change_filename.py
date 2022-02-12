@@ -1,6 +1,7 @@
 import os
 import argparse
 from os.path import abspath
+import cv2
 
 
 def change_filename(dir, ori, new):
@@ -10,6 +11,11 @@ def change_filename(dir, ori, new):
         first_file = origin_file + file + "/"
         images = os.listdir(abspath(first_file))
         for image in images:
+            src = first_file + image
+            img = cv2.imread(src)
+            if img is None:
+                print("Delete file:", src)
+                os.remove(src)
             split = image.split(".")
             if split is not None:
                 suffix = split[-1]
@@ -17,7 +23,17 @@ def change_filename(dir, ori, new):
                     src = first_file + image
                     new_image = "".join(split[:-1]) + "." + new
                     dst = first_file + new_image
+                    print("Rename file:", dst)
                     os.rename(src, dst)
+
+
+def is_valid(file):
+    valid = True
+    try:
+        Image.open(file).load()
+    except OSError:
+        valid = False
+    return valid
 
 
 if __name__ == "__main__":

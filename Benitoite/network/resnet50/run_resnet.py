@@ -5,8 +5,11 @@ from resnet_50 import resnet_50
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
+
+
 np.random.seed(1)
 tf.random.set_seed(1)
+
 
 epochs = 15
 batch_size = 8
@@ -17,8 +20,7 @@ img_width = 224
 def set_gpu():
     gpus = tf.config.list_physical_devices("GPU")
     if gpus:
-        tf.config.experimental.set_memory_growth(
-            gpus[0], True)
+        tf.config.experimental.set_memory_growth(gpus[0], True)
         tf.config.set_visible_devices([gpus[0]], "GPU")
 
 
@@ -50,9 +52,9 @@ def train_model(model, train_ds, val_ds):
     print("Training...")
     opt = tf.keras.optimizers.Adam(learning_rate=1e-3)
 
-    model.compile(optimizer="adam",
-                  loss='sparse_categorical_crossentropy',
-                  metrics=['accuracy'])
+    model.compile(
+        optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"]
+    )
 
     history = model.fit(train_ds, validation_data=val_ds, epochs=epochs)
     model.save("./resnet_50.h5")
@@ -61,7 +63,7 @@ def train_model(model, train_ds, val_ds):
 
 def predict(val_ds, class_names):
     print("Predicting...")
-    new_model = keras.models.load_model('./resnet_50.h5')
+    new_model = keras.models.load_model("./resnet_50.h5")
     plt.figure(figsize=(10, 5))
     plt.suptitle("Predict")
 
@@ -83,11 +85,11 @@ def predict(val_ds, class_names):
 
 def evaluate(history, epochs):
     print("Evaluating...")
-    acc = history.history['accuracy']
-    val_acc = history.history['val_accuracy']
+    acc = history.history["accuracy"]
+    val_acc = history.history["val_accuracy"]
 
-    loss = history.history['loss']
-    val_loss = history.history['val_loss']
+    loss = history.history["loss"]
+    val_loss = history.history["val_loss"]
 
     epochs_range = range(epochs)
 
@@ -95,16 +97,16 @@ def evaluate(history, epochs):
     plt.subplot(1, 2, 1)
     plt.suptitle("Evaluate")
 
-    plt.plot(epochs_range, acc, label='Training Accuracy')
-    plt.plot(epochs_range, val_acc, label='Validation Accuracy')
-    plt.legend(loc='lower right')
-    plt.title('Training and Validation Accuracy')
+    plt.plot(epochs_range, acc, label="Training Accuracy")
+    plt.plot(epochs_range, val_acc, label="Validation Accuracy")
+    plt.legend(loc="lower right")
+    plt.title("Training and Validation Accuracy")
 
     plt.subplot(1, 2, 2)
-    plt.plot(epochs_range, loss, label='Training Loss')
-    plt.plot(epochs_range, val_loss, label='Validation Loss')
-    plt.legend(loc='upper right')
-    plt.title('Training and Validation Loss')
+    plt.plot(epochs_range, loss, label="Training Loss")
+    plt.plot(epochs_range, val_loss, label="Validation Loss")
+    plt.legend(loc="upper right")
+    plt.title("Training and Validation Loss")
     plt.show()
 
 

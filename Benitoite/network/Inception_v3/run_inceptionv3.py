@@ -39,7 +39,7 @@ if __name__ == "__main__":
     test = args.test
     gen_model = args.gen_model
 
-    model = InceptionV3([img_height, img_width, 3], 12)
+    model = InceptionV3([img_height, img_width, 3], 1000)
 
     run_utils = utils(model, [img_height, img_width, img_channel], batch_size)
 

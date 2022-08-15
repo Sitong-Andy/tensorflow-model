@@ -1,7 +1,7 @@
 import argparse
 import tensorflow as tf
 import numpy as np
-from gru_cell import GRU
+from Benitoite.network.GRU.gru_cell import GRU
 
 input_shape = []
 quant_bit = 8

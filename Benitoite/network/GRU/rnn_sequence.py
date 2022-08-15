@@ -1,4 +1,4 @@
-from gru_cell import GRU
+from Benitoite.network.GRU.gru_cell import GRU
 import tensorflow as tf
 import numpy as np
 import tensorflow.keras.layers as KL
